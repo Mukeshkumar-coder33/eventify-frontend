@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Card, Button, Modal, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaHeart, FaPlus, FaEdit, FaTrash, FaMapMarkerAlt } from 'react-icons/fa';
-import axios from 'axios';
+import API from '../api/axios';
 import AuthContext from '../context/AuthContext';
 
 const ConcertEvents = () => {
@@ -26,7 +26,7 @@ const ConcertEvents = () => {
 
     const fetchConcerts = async () => {
         try {
-            const { data } = await axios.get('http://localhost:5000/api/concert-events');
+            const { data } = await API.get('/api/concert-events');
             setConcerts(data);
         } catch (error) {
             console.error(error);
@@ -55,9 +55,8 @@ const ConcertEvents = () => {
 
     const handleSave = async () => {
         try {
-            const config = { headers: { Authorization: `Bearer ${user.token}` } };
             if (editingId) {
-                await axios.put(`http://localhost:5000/api/concert-events/${editingId}`, formData, config);
+                await API.put(`/api/concert-events/${editingId}`, formData);
             } else {
                 const payload = {
                     ...formData,
@@ -67,7 +66,7 @@ const ConcertEvents = () => {
                         diamond: Number(formData.pricing.diamond)
                     }
                 };
-                await axios.post('http://localhost:5000/api/concert-events', payload, config);
+                await API.post('/api/concert-events', payload);
             }
             setShowModal(false);
             setFormData({ name: '', location: '', description: '', pricing: { gold: '', platinum: '', diamond: '' } });
@@ -82,8 +81,7 @@ const ConcertEvents = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this concert event?')) {
             try {
-                const config = { headers: { Authorization: `Bearer ${user.token}` } };
-                await axios.delete(`http://localhost:5000/api/concert-events/${id}`, config);
+                await API.delete(`/api/concert-events/${id}`);
                 fetchConcerts();
             } catch (error) {
                 console.error(error);
@@ -115,11 +113,10 @@ const ConcertEvents = () => {
         }
 
         const amount = selectedConcert.pricing[bookingDetails.ticketCategory];
-        const config = { headers: { Authorization: `Bearer ${user.token}` } };
 
         try {
             // 1. Create Order
-            const { data: order } = await axios.post('http://localhost:5000/api/payments/order', { amount }, config);
+            const { data: order } = await API.post('/api/payments/order', { amount });
 
             const options = {
                 key: "rzp_test_S9wsPk9p9MqMje", // Use process.env in real app (Vite req)
@@ -141,12 +138,12 @@ const ConcertEvents = () => {
                     };
 
                     try {
-                        const verifyRes = await axios.post('http://localhost:5000/api/payments/verify', {
+                        const verifyRes = await API.post('/api/payments/verify', {
                             razorpay_order_id: response.razorpay_order_id,
                             razorpay_payment_id: response.razorpay_payment_id,
                             razorpay_signature: response.razorpay_signature,
                             paymentData
-                        }, config);
+                        });
 
                         setLastPayment({ ...paymentData, eventName: selectedConcert.name, date: new Date().toLocaleDateString(), razorpayPaymentId: response.razorpay_payment_id });
                         setShowBookingModal(false);

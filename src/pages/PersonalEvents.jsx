@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Card, Button, Modal, Form, Badge } from 'react-bootstrap';
 import { FaMapMarkerAlt, FaCalendarAlt, FaEdit, FaTrash, FaWhatsapp, FaInstagram, FaHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import API from '../api/axios';
 import AuthContext from '../context/AuthContext';
 
 const PersonalEvents = () => {
@@ -19,7 +19,7 @@ const PersonalEvents = () => {
 
     const fetchEvents = async () => {
         try {
-            const { data } = await axios.get('http://localhost:5000/api/personal-events');
+            const { data } = await API.get('/api/personal-events');
             setEvents(data);
         } catch (error) {
             console.error(error);
@@ -32,11 +32,10 @@ const PersonalEvents = () => {
 
     const handleSave = async () => {
         try {
-            const config = { headers: { Authorization: `Bearer ${user.token}` } };
             if (editingId) {
-                await axios.put(`http://localhost:5000/api/personal-events/${editingId}`, formData, config);
+                await API.put(`/api/personal-events/${editingId}`, formData);
             } else {
-                await axios.post('http://localhost:5000/api/personal-events', formData, config);
+                await API.post('/api/personal-events', formData);
             }
             setShowModal(false);
             setFormData({ name: '', location: '', time: '', description: '' });
@@ -50,8 +49,7 @@ const PersonalEvents = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this event?')) {
             try {
-                const config = { headers: { Authorization: `Bearer ${user.token}` } };
-                await axios.delete(`http://localhost:5000/api/personal-events/${id}`, config);
+                await API.delete(`/api/personal-events/${id}`);
                 fetchEvents();
             } catch (error) {
                 console.error(error);
@@ -61,8 +59,7 @@ const PersonalEvents = () => {
 
     const handleRSVP = async (id) => {
         try {
-            const config = { headers: { Authorization: `Bearer ${user.token}` } };
-            const { data } = await axios.post(`http://localhost:5000/api/personal-events/${id}/rsvp`, {}, config);
+            const { data } = await API.post(`/api/personal-events/${id}/rsvp`, {});
 
             // Update local state immediately
             setEvents(events.map(event => event._id === id ? data : event));
