@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);
+  --bg-gradient: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --text-main: #ffffff;
+  --text-muted: #b3b3b3;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Page wrapper to push footer down */
+.page-wrapper {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+/* Full-width sections */
+.full-width-section {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Content container with max-width for readability */
+.content-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Glassmorphism Card Utility */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 15px;
+  color: white;
+}
+
+.light-glass-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  border-radius: 15px;
+  color: #1a1a1a;
+}
+
+/* Navbar Customization */
+.glass-navbar {
+  background: rgba(15, 12, 41, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #fff !important;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--primary-gradient);
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+}
+
+.btn-success {
+  background: var(--secondary-gradient);
+  border: none;
+}
+
+.btn-outline-light:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* Form Controls */
+.form-control {
+  background: rgba(255, 255, 255, 0.1);
+  border: var(--glass-border);
+  color: white;
+}
+
+.form-control:focus {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: none;
+  border-color: #764ba2;
+  color: white;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f0c29;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #764ba2;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Footer - Full Width */
+.footer-glass {
+  flex-shrink: 0;
+  background: rgba(15, 12, 41, 0.98);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3rem 0;
+  margin-top: 5rem;
+  width: 100%;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Feature Sections */
+.feature-icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon-circle {
+  background: var(--primary-gradient);
+  transform: scale(1.1);
+}
+
+/* Hover Effects */
+.hover-scale:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Contrast Fixes */
+.text-muted {
+  color: #d1d1d1 !important;
+}
+
+.text-light-custom {
+  color: #f0f0f0 !important;
+}
+
+/* Responsive Grid */
+@media (max-width: 768px) {
+  .content-container {
+    padding: 0 1rem;
+  }
+
+  .footer-content {
+    padding: 0 1rem;
+  }
+}
