@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
+    baseURL: import.meta.env.VITE_API_URL || 'https://eventify-backend-ne49.onrender.com',
 });
 
 // Add a request interceptor to include the token in all requests
